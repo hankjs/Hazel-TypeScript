@@ -1,0 +1,10 @@
+{
+  "testMatch": ["<rootDir>/**/*.spec.(ts|tsx|js|mjs)"],
+  "testPathIgnorePatterns": ["<rootDir>/node_modules"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "json", "mjs"],
+  "modulePathIgnorePatterns": ["dist", ".fatherrc.ts"],
+  "transformIgnorePatterns": ["<rootDir>/node_modules/(?!@mapbox)"],
+  "moduleNameMapper": {
+    "^src/(.*)": "<rootDir>/src/$1"
+  }
+}
