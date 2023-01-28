@@ -1,3 +1,6 @@
+import chalk from "chalk";
+import { DEV } from "src/share/env";
+
 export class Log {
     static init() {
         Log.#coreLogger = console;
@@ -16,14 +19,32 @@ export class Log {
     }
 }
 
-export const HZ_CORE_TRACE = (...args: [formatter: any, ...other: any[]]) => Log.getCoreLogger().trace("[TRACE]", ...args);
-export const HZ_CORE_WARN = (...args: [formatter: any, ...other: any[]]) => Log.getCoreLogger().warn("[WARN]", ...args);
-export const HZ_CORE_INFO = (...args: [formatter: any, ...other: any[]]) => Log.getCoreLogger().info("[INFO]", ...args);
-export const HZ_CORE_ERROR = (...args: [formatter: any, ...other: any[]]) => Log.getCoreLogger().error("[ERROR]", ...args);
-export const HZ_CORE_FATAL = (...args: [formatter: any, ...other: any[]]) => Log.getCoreLogger().error("[FATAL]", ...args);
+function format(color: "blue" | "red" | "yellow", type: string) {
+    if (DEV) {
+        return chalk[color](type);
+    }
 
-export const HZ_TRACE = (...args: [formatter: any, ...other: any[]]) => Log.getClientLogger().trace("[TRACE]", ...args);
-export const HZ_WARN = (...args: [formatter: any, ...other: any[]]) => Log.getClientLogger().warn("[WARN]", ...args);
-export const HZ_INFO = (...args: [formatter: any, ...other: any[]]) => Log.getClientLogger().info("[INFO]", ...args);
-export const HZ_ERROR = (...args: [formatter: any, ...other: any[]]) => Log.getClientLogger().error("[ERROR]", ...args);
-export const HZ_FATAL = (...args: [formatter: any, ...other: any[]]) => Log.getClientLogger().error("[FATAL]", ...args);
+    return type;
+}
+
+export const HZ_CORE_TRACE = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getCoreLogger().trace(format("red", "[TRACE]"), ...args);
+export const HZ_CORE_WARN = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getCoreLogger().warn(format("yellow", "[WARN]"), ...args);
+export const HZ_CORE_INFO = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getCoreLogger().info(format("blue", "[INFO]"), ...args);
+export const HZ_CORE_ERROR = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getCoreLogger().error(format("red", "[ERROR]"), ...args);
+export const HZ_CORE_FATAL = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getCoreLogger().error(format("red", "[FATAL]"), ...args);
+
+export const HZ_TRACE = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getClientLogger().trace(chalk("red", "[TRACE]"), ...args);
+export const HZ_WARN = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getClientLogger().warn(chalk("yellow", "[WARN]"), ...args);
+export const HZ_INFO = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getClientLogger().info(chalk("blue", "[INFO]"), ...args);
+export const HZ_ERROR = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getClientLogger().error(chalk("red", "[ERROR]"), ...args);
+export const HZ_FATAL = (...args: [formatter: any, ...other: any[]]) =>
+    Log.getClientLogger().error(chalk("red", "[FATAL]"), ...args);

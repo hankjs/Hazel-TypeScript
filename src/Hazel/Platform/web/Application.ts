@@ -23,7 +23,7 @@ export class Application extends _Application {
     }
 
     run(): void {
-        HZ_CORE_INFO("Application running...", this.m_Window);
+        HZ_CORE_INFO("Application running...");
 
         this.m_Loop.while(() => {
             this.m_Window.onUpdate();

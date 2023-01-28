@@ -13,6 +13,5 @@ export namespace Hazel {
         BaseApplication = Web.Application;
     }
 
-    console.log("BaseApplication", BaseApplication);
     export class Application extends BaseApplication {};
 }
