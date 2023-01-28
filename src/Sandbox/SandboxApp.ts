@@ -1,7 +1,7 @@
-import { Hazel } from "src/Hazel/Application";
+import { Hazel } from "Hazel/index";
 
 export class Sandbox extends Hazel.Application {
-    static createApplication(): Hazel.Application {
-        return new Sandbox();
+    static createApplication(el?: HTMLElement): Hazel.Application {
+        return Hazel.Application.createApplication(el);
     }
 }
