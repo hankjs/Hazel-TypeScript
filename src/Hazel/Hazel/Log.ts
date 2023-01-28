@@ -19,7 +19,7 @@ export class Log {
     }
 }
 
-function format(color: "blue" | "red" | "yellow", type: string) {
+function format(color: "blue" | "red" | "yellow" | "green", type: string) {
     if (DEV) {
         return chalk[color](type);
     }
@@ -28,23 +28,23 @@ function format(color: "blue" | "red" | "yellow", type: string) {
 }
 
 export const HZ_CORE_TRACE = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getCoreLogger().trace(format("red", "[TRACE]"), ...args);
+    Log.getCoreLogger().trace(format("green", "[TRACE]"), ...args);
 export const HZ_CORE_WARN = (...args: [formatter: any, ...other: any[]]) =>
     Log.getCoreLogger().warn(format("yellow", "[WARN]"), ...args);
 export const HZ_CORE_INFO = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getCoreLogger().info(format("blue", "[INFO]"), ...args);
+    Log.getCoreLogger().trace(format("blue", "[INFO]"), ...args);
 export const HZ_CORE_ERROR = (...args: [formatter: any, ...other: any[]]) =>
     Log.getCoreLogger().error(format("red", "[ERROR]"), ...args);
 export const HZ_CORE_FATAL = (...args: [formatter: any, ...other: any[]]) =>
     Log.getCoreLogger().error(format("red", "[FATAL]"), ...args);
 
 export const HZ_TRACE = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getClientLogger().trace(chalk("red", "[TRACE]"), ...args);
+    Log.getClientLogger().trace(format("green", "[TRACE]"), ...args);
 export const HZ_WARN = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getClientLogger().warn(chalk("yellow", "[WARN]"), ...args);
+    Log.getClientLogger().warn(format("yellow", "[WARN]"), ...args);
 export const HZ_INFO = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getClientLogger().info(chalk("blue", "[INFO]"), ...args);
+    Log.getClientLogger().trace(format("blue", "[INFO]"), ...args);
 export const HZ_ERROR = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getClientLogger().error(chalk("red", "[ERROR]"), ...args);
+    Log.getClientLogger().error(format("red", "[ERROR]"), ...args);
 export const HZ_FATAL = (...args: [formatter: any, ...other: any[]]) =>
-    Log.getClientLogger().error(chalk("red", "[FATAL]"), ...args);
+    Log.getClientLogger().error(format("red", "[FATAL]"), ...args);

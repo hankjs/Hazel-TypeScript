@@ -2,22 +2,23 @@ import { Loop as _Loop } from "Hazel/Hazel/Loop";
 
 export class Loop extends _Loop {
 
+    segment!: CallableFunction;
+
     constructor() {
         super();
     }
 
     while(segment: CallableFunction) {
-        this.tick(segment);
+        this.segment = segment;
+        window.requestAnimationFrame(this.tick.bind(this));
     }
 
-    async tick(fn: CallableFunction) {
+    async tick() {
         if (this.m_stop) {
             return;
         }
-        await fn();
-        window.requestAnimationFrame(() => {
-            this.tick(fn);
-        });
+        await this.segment();
+        window.requestAnimationFrame(this.tick.bind(this));
     }
 
     static create() {

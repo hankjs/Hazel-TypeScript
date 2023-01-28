@@ -65,6 +65,13 @@ export class Window extends _Window {
         };
         window.addEventListener("mousedown", mousedownHandler);
 
+        const contextmenuHandler = (event: MouseEvent) => {
+            if (this.isOutside) return;
+            event.preventDefault();
+            event.stopPropagation();
+        };
+        window.addEventListener("contextmenu", contextmenuHandler);
+
         const mouseupHandler = (event: MouseEvent) => {
             if (this.isOutside) return;
             this.m_data.eventCallback(
@@ -115,6 +122,7 @@ export class Window extends _Window {
             window.removeEventListener("keydown", keydownHandler);
             window.removeEventListener("keyup", keyupHandler);
             window.removeEventListener("mousedown", mousedownHandler);
+            window.removeEventListener("contextmenu", contextmenuHandler);
             window.removeEventListener("mouseup", mouseupHandler);
             window.removeEventListener("wheel", wheelHandler, {
                 passive: false,
@@ -124,7 +132,6 @@ export class Window extends _Window {
     }
 
     onUpdate(): void {
-        HZ_CORE_INFO("Window Update");
     }
 
     setEventCallback(callback: EventCallBackFn) {
