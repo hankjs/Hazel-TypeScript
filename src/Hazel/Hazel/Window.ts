@@ -4,11 +4,12 @@ export interface WindowProps {
     title: string;
     width: number;
     height: number;
+    el?: Element;
 }
 
 export const noop = () => {};
 
-type EventCallBackFn = (e: Event) => void;
+export type EventCallBackFn = (e: Event) => void;
 export abstract class Window {
     onUpdate(): void {
         throw new Error("Method not implemented.");
@@ -45,7 +46,7 @@ export abstract class Window {
         title: "",
         width: 0,
         height: 0,
-        eventCallback: noop,
+        eventCallback: noop as (event: Event) => void,
     };
 
 }

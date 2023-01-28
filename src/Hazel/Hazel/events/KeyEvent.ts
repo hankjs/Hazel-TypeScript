@@ -3,7 +3,7 @@ import { EventCategory, eventClassCategory, eventClassType, Event } from "./Even
 @eventClassCategory(EventCategory.EventCategoryKeyboard | EventCategory.EventCategoryInput)
 export class KeyEvent extends Event {
     constructor(
-        protected m_keyCode: number
+        protected m_keyCode: string
     ) { super(); }
 
     getKeyCode() {
@@ -14,25 +14,25 @@ export class KeyEvent extends Event {
 @eventClassType("KeyPressed")
 export class KeyPressedEvent extends KeyEvent {
     constructor(
-        keycode: number,
-        private m_repeatCount: number
+        keycode: string,
+        private m_repeat: boolean
     ) {
         super(keycode);
     }
 
     getRepeatCount() {
-        return this.m_repeatCount;
+        return this.m_repeat;
     }
 
     toString(): string {
-        return `KeyPressedEvent: ${this.m_keyCode} (${this.m_repeatCount} repeats)`;
+        return `KeyPressedEvent: ${this.m_keyCode} (${this.m_repeat} repeats)`;
     }
 }
 
 @eventClassType("KeyReleased")
 export class KeyReleasedEvent extends KeyEvent {
     constructor(
-        keycode: number,
+        keycode: string,
     ) {
         super(keycode);
     }

@@ -6,7 +6,7 @@ export function main() {
     Hazel.Log.init();
     HZ_CORE_INFO(`Hazel init Platform: ${PLATFORM}`)
     
-    const app = Sandbox.createApplication();
+    const app = Sandbox.createApplication(document.querySelector("#canvas")!);
     app.run();
 
     return 0;

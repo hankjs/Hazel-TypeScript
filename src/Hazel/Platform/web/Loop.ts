@@ -1,18 +1,9 @@
 import { Loop as _Loop } from "Hazel/Hazel/Loop";
 
 export class Loop extends _Loop {
-    #stop = false;
 
     constructor() {
         super();
-    }
-
-    start() {
-        this.#stop = false;
-    }
-
-    stop() {
-        this.#stop = true;
     }
 
     while(segment: CallableFunction) {
@@ -20,7 +11,7 @@ export class Loop extends _Loop {
     }
 
     async tick(fn: CallableFunction) {
-        if (this.#stop) {
+        if (this.m_stop) {
             return;
         }
         await fn();

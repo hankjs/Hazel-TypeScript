@@ -4,7 +4,17 @@ export class Loop {
         throw new Error("Method not implemented.");
     }
 
+    start() {
+        this.m_stop = false;
+    }
+
+    stop() {
+        this.m_stop = true;
+    }
+
     static create(): Loop {
         throw new Error("Method not implemented.");
     }
+
+    protected m_stop = false;
 }
