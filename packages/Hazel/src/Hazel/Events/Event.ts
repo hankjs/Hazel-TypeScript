@@ -4,7 +4,7 @@ export enum EventType {
     None = 0,
     WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
     AppTick, AppUpdate, AppRender,
-    KeyPressed, KeyReleased,
+    KeyPressed, KeyReleased, KeyTyped,
     MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 }
 
@@ -55,6 +55,7 @@ export function eventClassCategory(eventCategory: EventCategory) {
     }
 }
 export abstract class Event {
+    constructor(...args: any[]) {}
     getEventType(): EventType {
         throw new Error("Method not implemented.");
     }
@@ -80,15 +81,16 @@ export abstract class Event {
 }
 
 export class EventDispatcher {
-
     constructor(event: Event) {
         this.m_Event = event;
     }
 
-    dispatch(event: typeof Event, func: (event: Event) => boolean) {
-        if (this.m_Event.getEventType() === event.getStaticType()) {
-            this.m_Event.m_Handled = func(this.m_Event);
+    dispatch<T extends Event>(eventClass: typeof Event, func: (event: T) => boolean) {
+        if (this.m_Event.getEventType() === eventClass.getStaticType()) {
+            this.m_Event.m_Handled = func(this.m_Event as T);
+            return true;
         }
+        return false;
     }
 
     private m_Event: Event;

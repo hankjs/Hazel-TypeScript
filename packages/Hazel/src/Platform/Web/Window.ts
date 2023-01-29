@@ -1,6 +1,6 @@
 import { listenElementRemove } from "@hazel/share";
 import { WindowCloseEvent, WindowResizeEvent } from "../../Hazel/Events/ApplicationEvent";
-import { KeyPressedEvent, KeyReleasedEvent } from "../../Hazel/Events/KeyEvent";
+import { KeyPressedEvent, KeyReleasedEvent, KeyTypedEvent } from "../../Hazel/Events/KeyEvent";
 import {
     MouseButtonPressedEvent,
     MouseButtonReleasedEvent,
@@ -50,14 +50,21 @@ export class Window extends _Window {
         const keydownHandler = (event: KeyboardEvent) => {
             if (this.isOutside) return;
             this.m_data.eventCallback(
-                new KeyPressedEvent(event.key, event.repeat)
+                new KeyPressedEvent(event.code, event.repeat)
             );
         };
         window.addEventListener("keydown", keydownHandler);
 
+        const keypressHandler = (event: KeyboardEvent) => {
+            console.log("event", event);
+            if (this.isOutside) return;
+            this.m_data.eventCallback(new KeyTypedEvent(event.code));
+        };
+        window.addEventListener("keypress", keypressHandler);
+
         const keyupHandler = (event: KeyboardEvent) => {
             if (this.isOutside) return;
-            this.m_data.eventCallback(new KeyReleasedEvent(event.key));
+            this.m_data.eventCallback(new KeyReleasedEvent(event.code));
         };
         window.addEventListener("keyup", keyupHandler);
 
@@ -97,7 +104,8 @@ export class Window extends _Window {
         });
 
         const mousemoveHandler = (event: MouseEvent) => {
-            const { left, top, width, height } = this.container.getBoundingClientRect();
+            const { left, top, width, height } =
+                this.container.getBoundingClientRect();
 
             const elementPositionX = left + window.pageXOffset;
             const elementPositionY = top + window.pageYOffset;
@@ -117,13 +125,13 @@ export class Window extends _Window {
         };
         window.addEventListener("mousemove", mousemoveHandler);
 
-
         listenElementRemove(this.container, () => {
             const event = new WindowCloseEvent();
             this.m_data.eventCallback(event);
 
             window.removeEventListener("resize", resizeHandler);
             window.removeEventListener("keydown", keydownHandler);
+            window.removeEventListener("keypress", keypressHandler);
             window.removeEventListener("keyup", keyupHandler);
             window.removeEventListener("mousedown", mousedownHandler);
             window.removeEventListener("contextmenu", contextmenuHandler);

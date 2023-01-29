@@ -46,6 +46,10 @@ export class MouseButtonEvent extends Event {
     constructor(
         protected m_Button: number,
     ) { super(); }
+
+    getMouseButton() {
+        return this.m_Button;
+    }
 }
 
 @eventClassType("MouseButtonPressed")

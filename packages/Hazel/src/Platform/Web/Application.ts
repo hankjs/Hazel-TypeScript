@@ -40,9 +40,6 @@ export class Application extends _Application {
 
 
     onEvent(event: Event): void {
-        if (!(event instanceof WindowCloseEvent)) {
-            return;
-        }
         const dispatcher = new EventDispatcher(event)
         dispatcher.dispatch(WindowCloseEvent, this.onWindowClose.bind(this))
 

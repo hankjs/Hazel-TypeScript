@@ -9,7 +9,7 @@ class ExampleLayer extends Hazel.Layer {
     onUpdate(): void { }
 
     onEvent(event: Hazel.Event): void {
-        console.trace(`${this.m_debugName}::Event`, event);
+        // console.trace(`${this.m_debugName}::Event`, event);
     }
 }
 

@@ -1,4 +1,4 @@
-import { Event } from "../Events/Event";
+import { Event, EventDispatcher } from "../Events/Event";
 import { Layer } from "../Layer";
 import * as ImGui from "@hazel/imgui";
 import * as ImGui_Impl from "../../Platform/OpenGL/imgui_impl";
@@ -6,6 +6,10 @@ import { AddFontFromFileTTF } from "./utils";
 import fontURL from "../../assets/fonts/Roboto-Medium.ttf";
 import { ShowDemoWindow } from "../../Platform/OpenGL/imgui_demo";
 import { MemoryEditor } from "../../Platform/OpenGL/imgui_memory_editor";
+import { MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent } from "../Events/MouseEvent";
+import { KeyPressedEvent, KeyReleasedEvent, KeyTypedEvent } from "../Events/KeyEvent";
+import { WindowResizeEvent } from "../Events/ApplicationEvent";
+import { key2Num } from "@hazel/share";
 
 let font: ImGui.Font | null = null;
 // Our state
@@ -218,6 +222,87 @@ export class ImGuiLayer extends Layer {
         ImGui_Impl.RenderDrawData(ImGui.GetDrawData());
     }
 
-    // @ts-ignore abstract methods props use in implement.
-    onEvent(event: Event): void {}
+    onEvent(event: Event): void {
+        const dispatcher = new EventDispatcher(event);
+        dispatcher.dispatch(
+            MouseButtonPressedEvent,
+            this.onMouseButtonPressedEvent.bind(this)
+        );
+        dispatcher.dispatch(
+            MouseButtonReleasedEvent,
+            this.onMouseButtonReleasedEvent.bind(this)
+        );
+        dispatcher.dispatch(MouseMovedEvent, this.onMouseMovedEvent.bind(this));
+        dispatcher.dispatch(
+            MouseScrolledEvent,
+            this.onMouseScrolledEvent.bind(this)
+        );
+        dispatcher.dispatch(KeyPressedEvent, this.onKeyPressedEvent.bind(this));
+        dispatcher.dispatch(
+            KeyReleasedEvent,
+            this.onKeyReleasedEvent.bind(this)
+        );
+        dispatcher.dispatch(KeyTypedEvent, this.onKeyTypedEvent.bind(this));
+        dispatcher.dispatch(
+            WindowResizeEvent,
+            this.onWindowResizeEvent.bind(this)
+        );
+    }
+
+    onMouseButtonPressedEvent(event: MouseButtonPressedEvent): boolean {
+        const io = ImGui.GetIO();
+        io.MouseDown[event.getMouseButton()] = true;
+
+        return false;
+    }
+    onMouseButtonReleasedEvent(event: MouseButtonReleasedEvent): boolean {
+        const io = ImGui.GetIO();
+        io.MouseDown[event.getMouseButton()] = false;
+
+        return false;
+    }
+    onMouseMovedEvent(event: MouseMovedEvent): boolean {
+        const io = ImGui.GetIO();
+        io.MousePos.x = event.getX();
+        io.MousePos.y = event.getY();
+
+        return false;
+    }
+    onMouseScrolledEvent(event: MouseScrolledEvent): boolean {
+        const io = ImGui.GetIO();
+        io.MouseWheelH += event.getXOffset();
+        io.MouseWheel += event.getYOffset();
+
+        return false;
+    }
+    onKeyPressedEvent(event: KeyPressedEvent): boolean {
+        const io = ImGui.GetIO();
+        io.KeysDown[event.getKeyCode()] = true;
+
+        return false;
+    }
+    onKeyReleasedEvent(event: KeyReleasedEvent): boolean {
+        const io = ImGui.GetIO();
+        io.KeysDown[event.getKeyCode()] = false;
+
+        return false;
+    }
+    onKeyTypedEvent(event: KeyTypedEvent): boolean {
+        const io = ImGui.GetIO();
+        const keyCode = event.getKeyCode();
+        if (keyCode > 0 && keyCode < 0x10000) {
+            io.AddInputCharacter(keyCode);
+        }
+
+        return false;
+    }
+    onWindowResizeEvent(event: WindowResizeEvent): boolean {
+        const io = ImGui.GetIO();
+        io.DisplaySize.x = event.getWidth();
+        io.DisplaySize.y = event.getHeight();
+        io.DisplayFramebufferScale.x = 1;
+        io.DisplayFramebufferScale.y = 1;
+
+        return false;
+    }
 }

@@ -10,3 +10,7 @@ export async function LoadArrayBuffer(url: string): Promise<ArrayBuffer> {
     const response: Response = await fetch(url);
     return response.arrayBuffer();
 }
+
+export const keyCodeToIndex: Record<string, number> = {
+    "NumpadEnter": 176,
+};

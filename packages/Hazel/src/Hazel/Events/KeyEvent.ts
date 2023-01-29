@@ -1,23 +1,24 @@
+import { key2Num } from "@hazel/share/src";
 import { EventCategory, eventClassCategory, eventClassType, Event } from "./Event";
 
 @eventClassCategory(EventCategory.EventCategoryKeyboard | EventCategory.EventCategoryInput)
 export class KeyEvent extends Event {
     constructor(
-        protected m_keyCode: string
+        protected code: string
     ) { super(); }
 
     getKeyCode() {
-        return this.m_keyCode;
+        return key2Num(this.code);
     }
 }
 
 @eventClassType("KeyPressed")
 export class KeyPressedEvent extends KeyEvent {
     constructor(
-        keycode: string,
+        code: string,
         private m_repeat: boolean
     ) {
-        super(keycode);
+        super(code);
     }
 
     getRepeatCount() {
@@ -25,19 +26,33 @@ export class KeyPressedEvent extends KeyEvent {
     }
 
     toString(): string {
-        return `KeyPressedEvent: ${this.m_keyCode} (${this.m_repeat} repeats)`;
+        return `KeyPressedEvent: ${this.code} (${this.m_repeat} repeats)`;
     }
 }
 
 @eventClassType("KeyReleased")
 export class KeyReleasedEvent extends KeyEvent {
     constructor(
-        keycode: string,
+        code: string,
     ) {
-        super(keycode);
+        super(code);
     }
 
     toString(): string {
-        return `KeyReleasedEvent: ${this.m_keyCode}`;
+        return `KeyReleasedEvent: ${this.code}`;
     }
 }
+
+@eventClassType("KeyTyped")
+export class KeyTypedEvent extends KeyEvent {
+    constructor(
+        code: string,
+    ) {
+        super(code);
+    }
+
+    toString(): string {
+        return `KeyTypedEvent: ${this.code}`;
+    }
+}
+
