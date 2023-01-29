@@ -1,10 +1,8 @@
-import { Hazel, HZ_CORE_INFO } from "Hazel/index";
-import { Sandbox } from "Sandbox/SandboxApp";
-import { PLATFORM } from "share/env";
+import { Sandbox } from "@hazel/sandbox";
+import { PLATFORM } from "@hazel/share";
 
 export function main() {
-    Hazel.Log.init();
-    HZ_CORE_INFO(`Hazel init Platform: ${PLATFORM}`)
+    console.log(`Hazel init Platform: ${PLATFORM}`)
     
     const app = Sandbox.createApplication(document.querySelector("#canvas")!);
     app.run();

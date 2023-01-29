@@ -1,14 +1,12 @@
-import { PLATFORM } from "src/share/env";
+import { PLATFORM } from "@hazel/share";
 import * as _Application from "./Hazel/Application";
-import * as _Log from "./Hazel/Log";
-import * as Web from "./Platform/web/index";
+import * as Web from "./Platform/Web/index";
 import * as _Layer from "./Hazel/Layer";
 import * as _LayerStack from "./Hazel/LayerStack";
-
-export * from "./Hazel/Log";
+import * as _Event from "./Hazel/Events/Event";
+import * as _ImGuiLayer from "./Hazel/ImGui/ImGuiLayer";
 
 export namespace Hazel {
-    export class Log extends _Log.Log {};
 
     let BaseApplication = _Application.Application;
     if (PLATFORM === "Web") {
@@ -19,4 +17,7 @@ export namespace Hazel {
 
     export class Layer extends _Layer.Layer {};
     export class LayerStack extends _LayerStack.LayerStack {};
+
+    export class Event extends _Event.Event {};
+    export class ImGuiLayer extends _ImGuiLayer.ImGuiLayer {};
 }

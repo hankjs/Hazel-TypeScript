@@ -1,17 +1,15 @@
-import { Hazel, HZ_INFO, HZ_TRACE } from "Hazel/index";
-import { Event } from "src/Hazel/Hazel/events/Event";
+import { Hazel } from "@hazel/hazel";
 
 class ExampleLayer extends Hazel.Layer {
     constructor(name: string = "Example") {
         super(name);
     }
 
-    onUpdate(): void {
-        HZ_INFO(`${this.m_debugName}::Update`)
-    }
+    onAttach(): void { }
+    onUpdate(): void { }
 
-    onEvent(event: Event): void {
-        HZ_TRACE(`${this.m_debugName}::Event`, event);
+    onEvent(event: Hazel.Event): void {
+        console.trace(`${this.m_debugName}::Event`, event);
     }
 }
 
@@ -20,6 +18,7 @@ export class Sandbox extends Hazel.Application {
         super(el);
 
         this.pushLayer(new ExampleLayer());
+        this.pushOverlay(new Hazel.ImGuiLayer());
     }
 
     static createApplication(el?: Element): Hazel.Application {

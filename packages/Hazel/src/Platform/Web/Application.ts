@@ -1,10 +1,8 @@
-import { HZ_CORE_INFO } from "Hazel/Hazel/Log";
-import { Application as _Application } from "Hazel/Hazel/Application";
+import { Application as _Application } from "../../Hazel/Application";
 import { Window } from "./Window";
 import { Loop } from "./Loop";
-import { WindowCloseEvent } from "src/Hazel/Hazel/events/ApplicationEvent";
-import { Event, EventDispatcher } from "src/Hazel/Hazel/events/Event";
-import { Layer } from "src/Hazel/Hazel/Layer";
+import { WindowCloseEvent } from "../../Hazel/Events/ApplicationEvent";
+import { Event, EventDispatcher } from "../../Hazel/Events/Event";
 
 export class Application extends _Application {
     container: Element ;
@@ -30,7 +28,7 @@ export class Application extends _Application {
     }
 
     run(): void {
-        HZ_CORE_INFO("Application running...");
+        console.info("Application running...");
 
         this.m_Loop.while(() => {
             for (const layer of this.m_LayerStack) {
@@ -40,13 +38,6 @@ export class Application extends _Application {
         });
     }
 
-    pushLayer(layer: Layer): void {
-        this.m_LayerStack.push(layer);
-    }
-
-    pushOverlay(layer: Layer): void {
-        this.m_LayerStack.push(layer);
-    }
 
     onEvent(event: Event): void {
         if (!(event instanceof WindowCloseEvent)) {

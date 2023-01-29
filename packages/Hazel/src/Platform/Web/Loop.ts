@@ -1,4 +1,4 @@
-import { Loop as _Loop } from "Hazel/Hazel/Loop";
+import { Loop as _Loop } from "../../Hazel/Loop";
 
 export class Loop extends _Loop {
 

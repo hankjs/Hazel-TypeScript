@@ -1,4 +1,4 @@
-import { Event } from "./events/Event";
+import { Event } from "./Events/Event";
 
 export class Layer {
     constructor(name = "Layer") {

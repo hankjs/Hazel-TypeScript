@@ -1,4 +1,4 @@
-import { Event } from "./events/Event";
+import { Event } from "./Events/Event";
 
 export interface WindowProps {
     title: string;

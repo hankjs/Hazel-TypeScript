@@ -17,9 +17,6 @@ export default defineConfig({
     resolve: {
         alias: {
           'src': _resolve('src'),
-          'share': _resolve('src/share'),
-          'Hazel': _resolve('src/Hazel'),
-          'Sandbox': _resolve('src/Sandbox'),
         },
     },
 });

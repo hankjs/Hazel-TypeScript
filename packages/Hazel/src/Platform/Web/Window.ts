@@ -1,9 +1,13 @@
-import { HZ_CORE_INFO } from "Hazel/Hazel/Log";
-import { WindowCloseEvent, WindowResizeEvent } from "src/Hazel/Hazel/events/ApplicationEvent";
-import { KeyPressedEvent, KeyReleasedEvent } from "src/Hazel/Hazel/events/KeyEvent";
-import { MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent } from "src/Hazel/Hazel/events/MouseEvent";
-import { EventCallBackFn, Window as _Window, WindowProps } from "src/Hazel/Hazel/Window";
-import { listenElementRemove } from "src/share/dom";
+import { listenElementRemove } from "@hazel/share";
+import { WindowCloseEvent, WindowResizeEvent } from "../../Hazel/Events/ApplicationEvent";
+import { KeyPressedEvent, KeyReleasedEvent } from "../../Hazel/Events/KeyEvent";
+import {
+    MouseButtonPressedEvent,
+    MouseButtonReleasedEvent,
+    MouseMovedEvent,
+    MouseScrolledEvent,
+} from "../../Hazel/Events/MouseEvent";
+import { EventCallBackFn, Window as _Window, WindowProps } from "../../Hazel/Window";
 
 const defaultProps = (): WindowProps => ({
     title: "Hazel",
@@ -32,7 +36,7 @@ export class Window extends _Window {
         this.m_data.width = props.width;
         this.m_data.height = props.height;
 
-        HZ_CORE_INFO(
+        console.info(
             `Creating window ${props.title} ${props.width} ${props.height}`
         );
 
