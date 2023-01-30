@@ -1,4 +1,5 @@
 import { Event } from "./Events/Event";
+import { Lifecycle } from "./Lifecycle";
 
 export interface WindowProps {
     title: string;
@@ -10,10 +11,7 @@ export interface WindowProps {
 export const noop = () => {};
 
 export type EventCallBackFn = (e: Event) => void;
-export abstract class Window {
-    onUpdate(): void {
-        throw new Error("Method not implemented.");
-    }
+export abstract class Window extends Lifecycle {
 
     getWidth(): number {
         throw new Error("Method not implemented.");

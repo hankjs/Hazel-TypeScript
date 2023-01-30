@@ -1,20 +1,10 @@
 import { Event } from "./Events/Event";
+import { Lifecycle } from "./Lifecycle";
 
-export class Layer {
+export abstract class Layer extends Lifecycle {
     constructor(name = "Layer") {
+        super();
         this.m_debugName = name;
-    }
-
-    onAttach(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    onDetach(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    onUpdate(): void {
-        throw new Error("Method not implemented.");
     }
 
     // @ts-ignore abstract methods props use in implement.

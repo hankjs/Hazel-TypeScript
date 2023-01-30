@@ -9,7 +9,6 @@ import { MemoryEditor } from "../../Platform/OpenGL/imgui_memory_editor";
 import { MouseButtonPressedEvent, MouseButtonReleasedEvent, MouseMovedEvent, MouseScrolledEvent } from "../Events/MouseEvent";
 import { KeyPressedEvent, KeyReleasedEvent, KeyTypedEvent } from "../Events/KeyEvent";
 import { WindowResizeEvent } from "../Events/ApplicationEvent";
-import { key2Num } from "@hazel/share";
 
 let font: ImGui.Font | null = null;
 // Our state
@@ -276,18 +275,27 @@ export class ImGuiLayer extends Layer {
         return false;
     }
     onKeyPressedEvent(event: KeyPressedEvent): boolean {
+        if (event.getKeyCode() === -1) {
+            return false
+        }
         const io = ImGui.GetIO();
         io.KeysDown[event.getKeyCode()] = true;
 
         return false;
     }
     onKeyReleasedEvent(event: KeyReleasedEvent): boolean {
+        if (event.getKeyCode() === -1) {
+            return false
+        }
         const io = ImGui.GetIO();
         io.KeysDown[event.getKeyCode()] = false;
 
         return false;
     }
     onKeyTypedEvent(event: KeyTypedEvent): boolean {
+        if (event.getKeyCode() === -1) {
+            return false
+        }
         const io = ImGui.GetIO();
         const keyCode = event.getKeyCode();
         if (keyCode > 0 && keyCode < 0x10000) {

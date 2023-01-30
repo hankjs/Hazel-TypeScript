@@ -53,20 +53,19 @@ export class Window extends _Window {
                 new KeyPressedEvent(event.code, event.repeat)
             );
         };
-        window.addEventListener("keydown", keydownHandler);
+        document.addEventListener("keydown", keydownHandler);
 
         const keypressHandler = (event: KeyboardEvent) => {
-            console.log("event", event);
             if (this.isOutside) return;
             this.m_data.eventCallback(new KeyTypedEvent(event.code));
         };
-        window.addEventListener("keypress", keypressHandler);
+        document.addEventListener("keypress", keypressHandler);
 
         const keyupHandler = (event: KeyboardEvent) => {
             if (this.isOutside) return;
             this.m_data.eventCallback(new KeyReleasedEvent(event.code));
         };
-        window.addEventListener("keyup", keyupHandler);
+        document.addEventListener("keyup", keyupHandler);
 
         const mousedownHandler = (event: MouseEvent) => {
             if (this.isOutside) return;
@@ -74,14 +73,14 @@ export class Window extends _Window {
                 new MouseButtonPressedEvent(event.button)
             );
         };
-        window.addEventListener("mousedown", mousedownHandler);
+        document.addEventListener("mousedown", mousedownHandler);
 
         const contextmenuHandler = (event: MouseEvent) => {
             if (this.isOutside) return;
             event.preventDefault();
             event.stopPropagation();
         };
-        window.addEventListener("contextmenu", contextmenuHandler);
+        document.addEventListener("contextmenu", contextmenuHandler);
 
         const mouseupHandler = (event: MouseEvent) => {
             if (this.isOutside) return;
@@ -89,7 +88,7 @@ export class Window extends _Window {
                 new MouseButtonReleasedEvent(event.button)
             );
         };
-        window.addEventListener("mouseup", mouseupHandler);
+        document.addEventListener("mouseup", mouseupHandler);
 
         const wheelHandler = (event: WheelEvent) => {
             if (this.isOutside) return;
@@ -99,7 +98,7 @@ export class Window extends _Window {
                 new MouseScrolledEvent(event.deltaX, event.deltaY)
             );
         };
-        window.addEventListener("wheel", wheelHandler, {
+        document.addEventListener("wheel", wheelHandler, {
             passive: false,
         });
 
@@ -123,23 +122,23 @@ export class Window extends _Window {
             if (this.isOutside) return;
             this.m_data.eventCallback(new MouseMovedEvent(elX, elY));
         };
-        window.addEventListener("mousemove", mousemoveHandler);
+        document.addEventListener("mousemove", mousemoveHandler);
 
         listenElementRemove(this.container, () => {
             const event = new WindowCloseEvent();
             this.m_data.eventCallback(event);
 
             window.removeEventListener("resize", resizeHandler);
-            window.removeEventListener("keydown", keydownHandler);
-            window.removeEventListener("keypress", keypressHandler);
-            window.removeEventListener("keyup", keyupHandler);
-            window.removeEventListener("mousedown", mousedownHandler);
-            window.removeEventListener("contextmenu", contextmenuHandler);
-            window.removeEventListener("mouseup", mouseupHandler);
-            window.removeEventListener("wheel", wheelHandler, {
+            document.removeEventListener("keydown", keydownHandler);
+            document.removeEventListener("keypress", keypressHandler);
+            document.removeEventListener("keyup", keyupHandler);
+            document.removeEventListener("mousedown", mousedownHandler);
+            document.removeEventListener("contextmenu", contextmenuHandler);
+            document.removeEventListener("mouseup", mouseupHandler);
+            document.removeEventListener("wheel", wheelHandler, {
                 passive: false,
             } as EventListenerOptions);
-            window.removeEventListener("mousemove", mousemoveHandler);
+            document.removeEventListener("mousemove", mousemoveHandler);
         });
     }
 
