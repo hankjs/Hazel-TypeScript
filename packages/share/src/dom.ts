@@ -22,7 +22,7 @@ export function listenElementRemove(el: Element, listener: () => void) {
     observer.observe(el.parentElement!, config);
 }
 
-export enum Key {
+export enum KeyCodes {
     Backspace = 8,
     Tab = 9,
     Enter = 13,
@@ -150,6 +150,21 @@ export enum Key {
     Quote = 222
 }
 
+export enum MouseButtonCodes {
+    Button1 = 0,
+    ButtonLeft = Button1,
+    Button2 = 1,
+    ButtonRight = Button2,
+    Button3 = 2,
+    ButtonMiddle = Button3,
+    Button4 = 3,
+    Button5 = 4,
+    Button6 = 5,
+    Button7 = 6,
+    Button8 = 7,
+    ButtonLast = Button8,
+}
+
 export function key2Num(key: string): number {
-    return Key[key as keyof typeof Key] || -1;
+    return KeyCodes[key as keyof typeof KeyCodes] || -1;
 }

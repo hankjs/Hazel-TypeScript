@@ -1,4 +1,5 @@
 import { Hazel } from "@hazel/hazel";
+import { KeyCodes } from "@hazel/share/src";
 
 class ExampleLayer extends Hazel.Layer {
     constructor(name: string = "Example") {
@@ -6,10 +7,19 @@ class ExampleLayer extends Hazel.Layer {
     }
 
     onAttach(): void { }
-    onUpdate(): void { }
+    onUpdate(): void {
+        if (Hazel.Input.isKeyPressed(KeyCodes.KeyA)) {
+            console.info("KeyA key is pressed (poll)!")
+        }
+    }
 
     onEvent(event: Hazel.Event): void {
-        // console.trace(`${this.m_debugName}::Event`, event);
+        if (event.getEventType() === Hazel.EventType.KeyPressed) {
+            const e = event as Hazel.KeyEvent;
+            if (e.getKeyCode() === KeyCodes.KeyS) {
+                console.info("KeyS key is pressed (event)!")
+            }
+        }
     }
 }
 

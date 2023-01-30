@@ -6,7 +6,7 @@ export abstract class Input extends Lifecycle {
     static create(): Input {
         throw new Error("Method not implemented.");
     }
-    static isKeyPressed(keycode: string): boolean {
+    static isKeyPressed(keycode: number): boolean {
         return s_Instance.isKeyPressedImpl(keycode);
     }
 
@@ -35,7 +35,7 @@ export abstract class Input extends Lifecycle {
     }
 
     // @ts-ignore abstract methods props use in implement.
-    isKeyPressedImpl(keycode: string): boolean {
+    isKeyPressedImpl(keycode: number): boolean {
         throw new Error("Method not implemented.");
     }
     // @ts-ignore abstract methods props use in implement.

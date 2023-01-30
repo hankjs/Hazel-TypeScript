@@ -1,3 +1,4 @@
+import { key2Num } from "@hazel/share/src";
 import { Input as _Input } from "../../Hazel/Input";
 import { Application } from "./Application";
 
@@ -10,7 +11,7 @@ export class Input extends _Input {
     };
 
     #button = new Map<number, MouseEvent>();
-    #key = new Map<string, KeyboardEvent>();
+    #key = new Map<number, KeyboardEvent>();
 
     constructor() {
         super();
@@ -23,7 +24,7 @@ export class Input extends _Input {
         return this.#button.has(button);
     }
 
-    isKeyPressedImpl(keycode: string): boolean {
+    isKeyPressedImpl(keycode: number): boolean {
         return this.#key.has(keycode);
     }
 
@@ -48,6 +49,7 @@ export class Input extends _Input {
             "visibilitychange",
             this.visibilitychangeHandler
         );
+        window.addEventListener("blur", this.pageLeave);
     }
 
     onDetach(): void {
@@ -60,6 +62,7 @@ export class Input extends _Input {
             "visibilitychange",
             this.visibilitychangeHandler
         );
+        window.removeEventListener("blur", this.pageLeave);
     }
 
     private mousedownHandler = (event: MouseEvent) => {
@@ -86,19 +89,23 @@ export class Input extends _Input {
     };
 
     private keydownHandler = (event: KeyboardEvent) => {
-        this.#key.set(event.code, event);
+        this.#key.set(key2Num(event.code), event);
     };
     private keyupHandler = (event: KeyboardEvent) => {
-        this.#key.delete(event.code);
+        this.#key.delete(key2Num(event.code));
     };
     private visibilitychangeHandler = () => {
         if (!document.hidden) {
             return;
         }
 
+        this.pageLeave();
+    };
+
+    private pageLeave = () => {
         this.#button.clear();
         this.#key.clear();
-    };
+    }
 
     static create(): _Input {
         return new Input();

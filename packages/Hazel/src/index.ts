@@ -14,6 +14,14 @@ export namespace Hazel {
     export class Layer extends _Hazel.Layer {};
     export class LayerStack extends _Hazel.LayerStack {};
 
-    export class Event extends _Hazel.Event {};
     export class ImGuiLayer extends _Hazel.ImGuiLayer {};
+
+    export class Input extends _Hazel.Input {};
+
+    export class Event extends _Hazel.Event {};
+    export class KeyEvent extends _Hazel.KeyEvent {};
+    export class MouseButtonEvent extends _Hazel.MouseButtonEvent {};
+
+    export const EventType = _Hazel.EventType;
+    export const EventCategory = _Hazel.EventCategory;
 }
