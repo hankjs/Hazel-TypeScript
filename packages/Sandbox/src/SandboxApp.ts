@@ -28,7 +28,6 @@ export class Sandbox extends Hazel.Application {
         super(el);
 
         this.pushLayer(new ExampleLayer());
-        this.pushOverlay(new Hazel.ImGuiLayer());
     }
 
     static createApplication(el?: Element): Hazel.Application {

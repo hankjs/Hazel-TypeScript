@@ -5,10 +5,12 @@ import { Loop } from "./Loop";
 import { WindowCloseEvent } from "../../Hazel/Events/ApplicationEvent";
 import { Event, EventDispatcher } from "../../Hazel/Events/Event";
 import { Input } from "./Input";
+import { ImGuiLayer } from "../../Hazel/ImGui";
 
 export class Application extends _Application {
     container: HTMLElement;
     m_Input: _Input;
+    m_ImGuiLayer: ImGuiLayer;
 
     constructor(el: HTMLElement) {
         super();
@@ -25,6 +27,8 @@ export class Application extends _Application {
         });
         this.m_Window.setEventCallback(this.onEvent.bind(this));
         this.m_Input = Input.create();
+        this.m_ImGuiLayer = new ImGuiLayer();
+        this.pushOverlay(new ImGuiLayer());
     }
 
     containerRect() {
@@ -38,6 +42,14 @@ export class Application extends _Application {
             for (const layer of this.m_LayerStack) {
                 layer.onUpdate();
             }
+
+            this.m_ImGuiLayer.begin();
+            for (const layer of this.m_LayerStack) {
+                if ("onImGuiRender" in (layer as ImGuiLayer)) {
+                    (layer as ImGuiLayer).onImGuiRender()
+                }
+            }
+            this.m_ImGuiLayer.end();
 
             this.m_Window.onUpdate();
         });

@@ -253,15 +253,15 @@ export function Init(value: HTMLCanvasElement | WebGL2RenderingContext | WebGLRe
     if (canvas !== null) {
         window_on_resize();
         canvas.style.touchAction = "none"; // Disable browser handling of all panning and zooming gestures.
-        // canvas.addEventListener("blur", canvas_on_blur);
-        // canvas.addEventListener("keydown", canvas_on_keydown);
-        // canvas.addEventListener("keyup", canvas_on_keyup);
-        // canvas.addEventListener("keypress", canvas_on_keypress);
-        // canvas.addEventListener("pointermove", canvas_on_pointermove);
-        // canvas.addEventListener("pointerdown", canvas_on_pointerdown);
-        // canvas.addEventListener("contextmenu", canvas_on_contextmenu);
-        // canvas.addEventListener("pointerup", canvas_on_pointerup);
-        // canvas.addEventListener("wheel", canvas_on_wheel);
+        canvas.addEventListener("blur", canvas_on_blur);
+        canvas.addEventListener("keydown", canvas_on_keydown);
+        canvas.addEventListener("keyup", canvas_on_keyup);
+        canvas.addEventListener("keypress", canvas_on_keypress);
+        canvas.addEventListener("pointermove", canvas_on_pointermove);
+        canvas.addEventListener("pointerdown", canvas_on_pointerdown);
+        canvas.addEventListener("contextmenu", canvas_on_contextmenu);
+        canvas.addEventListener("pointerup", canvas_on_pointerup);
+        canvas.addEventListener("wheel", canvas_on_wheel);
     }
 
     // Setup back-end capabilities flags
