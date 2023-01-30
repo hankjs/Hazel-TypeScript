@@ -1,11 +1,11 @@
 import { Layer } from "../Layer";
 import * as ImGui from "@hazel/imgui";
-import * as ImGui_Impl from "../../Platform/OpenGL/imgui_impl";
+import * as ImGui_Impl from "../../Platform/WebGL/imgui_impl";
 import { AddFontFromFileTTF } from "./utils";
 import fontURL from "../../assets/fonts/Roboto-Medium.ttf";
 import { Application } from "../../Platform/Web";
 import { Event } from "../Events";
-import { ShowDemoWindow } from "../../Platform/OpenGL/imgui_demo";
+import { ShowDemoWindow } from "../../Platform/WebGL/imgui_demo";
 
 let show_demo_window: boolean = true;
 let done: boolean = false;
