@@ -1,11 +1,11 @@
 import { Layer } from "../Layer";
 import * as ImGui from "@hazel/imgui";
-import * as ImGui_Impl from "../../Platform/WebGL/imgui_impl";
+import * as ImGui_Impl from "../../Platform/WebGL2/imgui_impl";
 import { AddFontFromFileTTF } from "./utils";
 import fontURL from "../../assets/fonts/Roboto-Medium.ttf";
 import { Application } from "../../Platform/Web";
 import { Event } from "../Events";
-import { ShowDemoWindow } from "../../Platform/WebGL/imgui_demo";
+import { ShowDemoWindow } from "../../Platform/WebGL2/imgui_demo";
 
 let show_demo_window: boolean = true;
 let done: boolean = false;
@@ -16,6 +16,10 @@ let isInit = false;
 export class ImGuiLayer extends Layer {
     constructor(name: string = "ImGuiLayer") {
         super(name);
+    }
+
+    setContext(context: HTMLCanvasElement | WebGL2RenderingContext | WebGLRenderingContext | CanvasRenderingContext2D) {
+        this.#context = context;
     }
 
     async onAttach() {
@@ -60,7 +64,9 @@ export class ImGuiLayer extends Layer {
         // Setup Platform/Renderer backends
         // ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
         // ImGui_ImplOpenGL3_Init(glsl_version);
-        if (typeof window !== "undefined") {
+        if (this.#context) {
+            ImGui_Impl.Init(this.#context);
+        } else if (typeof window !== "undefined") {
             const output: HTMLElement =
                 document.getElementById("output") || document.body;
             const canvas: HTMLCanvasElement = document.createElement("canvas");
@@ -104,13 +110,6 @@ export class ImGuiLayer extends Layer {
 
         ImGui.EndFrame();
         ImGui.Render();
-        const gl: WebGLRenderingContext | null = ImGui_Impl.gl;
-        if (gl) {
-            gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-            gl.clearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-            gl.clear(gl.COLOR_BUFFER_BIT);
-            //gl.useProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
-        }
         ImGui_Impl.RenderDrawData(ImGui.GetDrawData());
     }
 
@@ -126,4 +125,6 @@ export class ImGuiLayer extends Layer {
             done = /*ImGui.*/ShowDemoWindow((value = show_demo_window) => show_demo_window = value);
         }
     }
+
+    #context?: HTMLCanvasElement | WebGL2RenderingContext | WebGLRenderingContext | CanvasRenderingContext2D;
 }

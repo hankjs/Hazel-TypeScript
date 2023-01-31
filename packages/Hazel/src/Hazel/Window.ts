@@ -1,11 +1,11 @@
 import { Event } from "./Events/Event";
 import { Lifecycle } from "./Lifecycle";
 
-export interface WindowProps {
+export interface WindowProps<E = Element> {
     title: string;
     width: number;
     height: number;
-    el?: Element;
+    el?: E;
 }
 
 export const noop = () => {};
@@ -35,7 +35,7 @@ export abstract class Window extends Lifecycle {
     }
 
     // @ts-ignore abstract methods props use in implement.
-    static create(props: WindowProps): Window {
+    static create<P extends WindowProps<any>>(props: P): Window {
         throw new Error("Method not implemented.");
     }
 

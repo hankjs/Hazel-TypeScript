@@ -8,8 +8,11 @@ import {
     MouseScrolledEvent,
 } from "../../Hazel/Events/MouseEvent";
 import { EventCallBackFn, Window as _Window, WindowProps } from "../../Hazel/Window";
+import { WebGL2Context } from "../WebGL2/WebGL2Context";
 
-const defaultProps = (): WindowProps => ({
+type Props = WindowProps<HTMLElement>
+
+const defaultProps = (): Props => ({
     title: "Hazel",
     width: 300,
     height: 300,
@@ -18,23 +21,27 @@ const defaultProps = (): WindowProps => ({
 export class Window extends _Window {
     container: Element = document.body;
     isOutside = false;
+    m_Context: WebGL2Context | null= null;
 
-    static create(props?: WindowProps): _Window {
+    static create(props: Props): _Window {
         return new Window(props);
     }
 
-    constructor(props?: WindowProps) {
+    constructor(props: Props) {
         super();
         this.init(props);
     }
 
-    init(props: WindowProps = defaultProps()) {
+    init(props: Props = defaultProps()) {
         if (props.el) {
             this.container = props.el;
         }
         this.m_data.title = props.title;
         this.m_data.width = props.width;
         this.m_data.height = props.height;
+
+        this.m_Context = new WebGL2Context(props.el);
+        this.m_Context.init()
 
         console.info(
             `Creating window ${props.title} ${props.width} ${props.height}`
